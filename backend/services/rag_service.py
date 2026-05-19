@@ -35,17 +35,34 @@ def get_embeddings(texts: list) -> np.ndarray:
         logger.error(f"Embedding generation failed: {e}")
         return np.array([])
 
+INDEX_PATH = os.path.join(os.path.dirname(__file__), 
+             '..', 'data', 'faiss_index.bin')
+EMBEDDINGS_PATH = os.path.join(os.path.dirname(__file__), 
+                  '..', 'data', 'corpus_embeddings.npy')
+
 def build_index():
     global corpus_embeddings, index
+
+    # Load from disk if already built — skip Gemini API call
+    if os.path.exists(INDEX_PATH) and os.path.exists(EMBEDDINGS_PATH):
+        logger.info("Loading FAISS index from disk...")
+        index = faiss.read_index(INDEX_PATH)
+        corpus_embeddings = np.load(EMBEDDINGS_PATH)
+        logger.info(f"Loaded index with {index.ntotal} vectors.")
+        return
+
+    # First time only — build and save to disk
     if not legal_corpus:
         return
-    logger.info("Building FAISS index...")
+    logger.info("Building FAISS index for first time...")
     corpus_embeddings = get_embeddings(legal_corpus)
     if corpus_embeddings.size > 0:
         d = corpus_embeddings.shape[1]
         index = faiss.IndexFlatL2(d)
         index.add(corpus_embeddings)
-        logger.info(f"FAISS index built with {index.ntotal} vectors.")
+        faiss.write_index(index, INDEX_PATH)
+        np.save(EMBEDDINGS_PATH, corpus_embeddings)
+        logger.info(f"FAISS index built and saved with {index.ntotal} vectors.")
 
 # Build immediately on module import (MVP approach)
 build_index()
