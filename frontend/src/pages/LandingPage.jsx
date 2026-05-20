@@ -81,48 +81,48 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-slate-900 text-slate-100 flex flex-col items-center">
+    <div className="relative flex flex-col items-center min-h-screen overflow-hidden bg-slate-900 text-slate-100">
       {/* Background Gradients */}
       <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-nyaya-500/30 rounded-full blur-[120px] mix-blend-screen pointer-events-none"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-blue-600/20 rounded-full blur-[150px] mix-blend-screen pointer-events-none"></div>
 
-      <nav className="w-full max-w-7xl mx-auto px-6 py-6 flex justify-between items-center z-10">
+      <nav className="z-10 flex items-center justify-between w-full px-6 py-6 mx-auto max-w-7xl">
         <div className="flex items-center gap-2 text-2xl font-bold tracking-tight text-white cursor-pointer" onClick={() => navigate('/')}>
-          <Scale className="text-nyaya-500 w-8 h-8" />
+          <Scale className="w-8 h-8 text-nyaya-500" />
           <span>Nyaya<span className="text-nyaya-500">Vanni</span></span>
         </div>
         <div className="flex gap-4">
           <button 
             onClick={() => navigate('/lawyers')}
-            className="text-white px-5 py-2 rounded-full font-medium transition-colors hover:text-nyaya-400 hidden sm:block"
+            className="hidden px-5 py-2 font-medium text-white transition-colors rounded-full hover:text-nyaya-400 sm:block"
           >
             {t("nav.hire")}
           </button>
-          <button className="bg-white/10 hover:bg-white/20 text-white px-5 py-2 rounded-full font-medium transition-colors border border-white/10 backdrop-blur-md">
+          <button className="px-5 py-2 font-medium text-white transition-colors border rounded-full bg-white/10 hover:bg-white/20 border-white/10 backdrop-blur-md">
             {t("nav.signin")}
           </button>
         </div>
       </nav>
 
-      <main className="flex-1 w-full max-w-5xl mx-auto px-6 flex flex-col items-center justify-center text-center z-10 pb-24 pt-12">
+      <main className="z-10 flex flex-col items-center justify-center flex-1 w-full max-w-5xl px-6 pt-12 pb-24 mx-auto text-center">
         <div className="inline-block mb-6 px-4 py-1.5 rounded-full bg-nyaya-500/10 border border-nyaya-500/20 text-nyaya-400 font-medium text-sm animate-pulse-soft">
           Powered by Advanced AI
         </div>
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
-          {t("landing.hero.title1")} <br/> {t("landing.hero.title2")} <span className="text-transparent bg-clip-text bg-gradient-to-r from-nyaya-400 to-blue-400">{t("landing.hero.title3")}</span>
+        <h1 className="mb-6 text-5xl font-extrabold leading-tight tracking-tight md:text-7xl">
+          {t("landing.hero.title1")} <br/> {t("landing.hero.title2")} <span className="text-transparent bg-clip-text bg-linear-to-r from-nyaya-400 to-blue-400">{t("landing.hero.title3")}</span>
         </h1>
-        <p className="text-lg md:text-xl text-slate-400 max-w-2xl mb-12">
+        <p className="max-w-2xl mb-12 text-lg md:text-xl text-slate-400">
           {t("landing.hero.subtitle")}
         </p>
 
         {/* Actions Area */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl justify-center relative z-10">
+        <div className="relative z-10 grid justify-center w-full max-w-6xl grid-cols-1 gap-8 md:grid-cols-3">
           
           {/* Upload Document Card */}
-          <div className="w-full relative animate-float group" style={{ animationDelay: '0s' }}>
-            <div className="absolute inset-0 bg-gradient-to-r from-nyaya-500/20 to-blue-500/20 rounded-[2rem] blur-xl transform translate-y-2 translate-x-1 -z-10 transition-all duration-500 group-hover:blur-2xl group-hover:scale-105"></div>
+          <div className="relative w-full animate-float group" style={{ animationDelay: '0s' }}>
+            <div className="absolute inset-0 transition-all duration-500 transform translate-x-1 translate-y-2 bg-linear-to-r from-nyaya-500/20 to-blue-500/20 rounded-4xl blur-xl -z-10 group-hover:blur-2xl group-hover:scale-105"></div>
             <div 
-              className={`h-full bg-slate-900/80 backdrop-blur-xl rounded-[2rem] p-10 border-2 transition-all duration-300 flex flex-col items-center justify-center min-h-[360px]
+              className={`h-full bg-slate-900/80 backdrop-blur-xl rounded-4xl p-10 border-2 transition-all duration-300 flex flex-col items-center justify-center min-h-90
                 ${dragActive ? 'border-nyaya-500 shadow-[0_0_30px_rgba(37,99,235,0.2)]' : 'border-slate-700/50 hover:border-slate-600 hover:bg-slate-800/80 hover:-translate-y-2 cursor-pointer'}`}
               onDragEnter={handleDrag}
               onDragLeave={handleDrag}
@@ -137,36 +137,36 @@ export default function LandingPage() {
               
               {!file ? (
                 <>
-                  <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center mb-6 shadow-inner ring-1 ring-slate-700 group-hover:scale-110 group-hover:bg-slate-700 transition-all duration-300">
+                  <div className="flex items-center justify-center w-16 h-16 mb-6 transition-all duration-300 rounded-full shadow-inner bg-slate-800 ring-1 ring-slate-700 group-hover:scale-110 group-hover:bg-slate-700">
                     <UploadCloud className="w-8 h-8 text-nyaya-400 group-hover:text-nyaya-300" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-3 text-white">{t("landing.upload.title")}</h3>
-                  <p className="text-slate-400 mb-8 whitespace-pre-line text-base flex-1">
+                  <h3 className="mb-3 text-2xl font-bold text-white">{t("landing.upload.title")}</h3>
+                  <p className="flex-1 mb-8 text-base whitespace-pre-line text-slate-400">
                     {t("landing.upload.desc")}
                   </p>
                   <button 
                     onClick={onButtonClick}
-                    className="w-full sm:w-auto bg-white hover:bg-slate-100 text-slate-900 px-8 py-3 rounded-full font-semibold transition-all shadow-lg flex items-center justify-center gap-2 hover:scale-105"
+                    className="flex items-center justify-center w-full gap-2 px-8 py-3 font-semibold transition-all bg-white rounded-full shadow-lg sm:w-auto hover:bg-slate-100 text-slate-900 hover:scale-105"
                   >
                     <FileText className="w-5 h-5" /> {t("landing.upload.btn")}
                   </button>
                 </>
               ) : (
-                <div className="flex flex-col items-center w-full h-full justify-center">
-                  <div className="w-16 h-16 rounded-full bg-nyaya-500/20 flex items-center justify-center mb-6 ring-1 ring-nyaya-500/50">
+                <div className="flex flex-col items-center justify-center w-full h-full">
+                  <div className="flex items-center justify-center w-16 h-16 mb-6 rounded-full bg-nyaya-500/20 ring-1 ring-nyaya-500/50">
                     <ShieldCheck className="w-8 h-8 text-nyaya-400" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-white truncate max-w-[200px]" title={file.name}>{file.name}</h3>
-                  <p className="text-slate-400 text-sm mb-10">{(file.size / 1024 / 1024).toFixed(2)} MB • Ready for analysis</p>
+                  <h3 className="mb-2 text-xl font-bold text-white truncate max-w-50" title={file.name}>{file.name}</h3>
+                  <p className="mb-10 text-sm text-slate-400">{(file.size / 1024 / 1024).toFixed(2)} MB • Ready for analysis</p>
                   
-                  <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
-                    <button onClick={(e) => { e.stopPropagation(); setFile(null); }} className="px-6 py-3 rounded-full font-medium transition-colors hover:bg-slate-800 text-slate-300" disabled={loading}>
+                  <div className="flex flex-col justify-center w-full gap-4 sm:flex-row">
+                    <button onClick={(e) => { e.stopPropagation(); setFile(null); }} className="px-6 py-3 font-medium transition-colors rounded-full hover:bg-slate-800 text-slate-300" disabled={loading}>
                       {t("landing.upload.cancel")}
                     </button>
                     <button 
                       onClick={(e) => { e.stopPropagation(); handleAnalyze(); }} 
                       disabled={loading}
-                      className="bg-nyaya-500 hover:bg-nyaya-400 text-white px-8 py-3 rounded-full font-semibold transition-all shadow-lg shadow-nyaya-500/25 flex items-center justify-center gap-2 disabled:opacity-70 hover:scale-105"
+                      className="flex items-center justify-center gap-2 px-8 py-3 font-semibold text-white transition-all rounded-full shadow-lg bg-nyaya-500 hover:bg-nyaya-400 shadow-nyaya-500/25 disabled:opacity-70 hover:scale-105"
                     >
                       {loading ? (
                         <><Loader2 className="w-5 h-5 animate-spin" /> {t("landing.upload.analyzing")}</>
@@ -181,35 +181,35 @@ export default function LandingPage() {
           </div>
 
           {/* Chat with Bot Card */}
-          <div className="w-full relative animate-float group" style={{ animationDelay: '0.2s' }}>
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-[2rem] blur-xl transform translate-y-2 translate-x-1 -z-10 transition-all duration-500 group-hover:blur-2xl group-hover:scale-105"></div>
-            <div className="h-full bg-slate-900/80 backdrop-blur-xl rounded-[2rem] p-10 border-2 border-slate-700/50 hover:border-slate-600 hover:bg-slate-800/80 transition-all duration-300 flex flex-col items-center justify-center min-h-[360px] hover:-translate-y-2 cursor-pointer" onClick={() => navigate('/chat')}>
-              <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center mb-6 shadow-inner ring-1 ring-slate-700 group-hover:scale-110 group-hover:bg-slate-700 transition-all duration-300">
+          <div className="relative w-full animate-float group" style={{ animationDelay: '0.2s' }}>
+            <div className="absolute inset-0 transition-all duration-500 transform translate-x-1 translate-y-2 bg-linear-to-r from-purple-500/20 to-pink-500/20 rounded-4xl blur-xl -z-10 group-hover:blur-2xl group-hover:scale-105"></div>
+            <div className="flex flex-col items-center justify-center h-full p-10 transition-all duration-300 border-2 cursor-pointer bg-slate-900/80 backdrop-blur-xl rounded-4xl border-slate-700/50 hover:border-slate-600 hover:bg-slate-800/80 min-h-90 hover:-translate-y-2" onClick={() => navigate('/chat')}>
+              <div className="flex items-center justify-center w-16 h-16 mb-6 transition-all duration-300 rounded-full shadow-inner bg-slate-800 ring-1 ring-slate-700 group-hover:scale-110 group-hover:bg-slate-700">
                 <Bot className="w-8 h-8 text-purple-400 group-hover:text-purple-300" />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-white">{t("landing.chat.title")}</h3>
-              <p className="text-slate-400 mb-8 text-center text-base max-w-xs flex-1">
+              <h3 className="mb-3 text-2xl font-bold text-white">{t("landing.chat.title")}</h3>
+              <p className="flex-1 max-w-xs mb-8 text-base text-center text-slate-400">
                 {t("landing.chat.desc")}
               </p>
               
-              <div className="flex flex-col gap-3 w-full max-w-[250px] mb-8">
+              <div className="flex flex-col gap-3 w-full max-w-62.5 mb-8">
                 <button 
                   onClick={(e) => { e.stopPropagation(); navigate('/chat', { state: { initialPrompt: "I need to draft a legal notice." } }); }}
-                  className="bg-slate-800/50 hover:bg-slate-700/50 border border-slate-700 rounded-lg py-2 px-4 text-sm text-slate-300 transition-colors text-left flex justify-between items-center group/btn"
+                  className="flex items-center justify-between px-4 py-2 text-sm text-left transition-colors border rounded-lg bg-slate-800/50 hover:bg-slate-700/50 border-slate-700 text-slate-300 group/btn"
                 >
-                  {t("landing.chat.draftNotice")} <ArrowRight className="w-4 h-4 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                  {t("landing.chat.draftNotice")} <ArrowRight className="w-4 h-4 transition-opacity opacity-0 group-hover/btn:opacity-100" />
                 </button>
                 <button 
                   onClick={(e) => { e.stopPropagation(); navigate('/chat', { state: { initialPrompt: "I need to draft a reply to a legal notice." } }); }}
-                  className="bg-slate-800/50 hover:bg-slate-700/50 border border-slate-700 rounded-lg py-2 px-4 text-sm text-slate-300 transition-colors text-left flex justify-between items-center group/btn"
+                  className="flex items-center justify-between px-4 py-2 text-sm text-left transition-colors border rounded-lg bg-slate-800/50 hover:bg-slate-700/50 border-slate-700 text-slate-300 group/btn"
                 >
-                  {t("landing.chat.replyNotice")} <ArrowRight className="w-4 h-4 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                  {t("landing.chat.replyNotice")} <ArrowRight className="w-4 h-4 transition-opacity opacity-0 group-hover/btn:opacity-100" />
                 </button>
               </div>
 
               <button 
                 onClick={(e) => { e.stopPropagation(); navigate('/chat'); }}
-                className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-8 py-3 rounded-full font-semibold transition-all shadow-[0_0_20px_rgba(168,85,247,0.3)] flex items-center justify-center gap-2 hover:scale-105"
+                className="w-full sm:w-auto bg-linear-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-8 py-3 rounded-full font-semibold transition-all shadow-[0_0_20px_rgba(168,85,247,0.3)] flex items-center justify-center gap-2 hover:scale-105"
               >
                 <MessageSquare className="w-5 h-5" /> {t("landing.chat.btn")}
               </button>
@@ -218,25 +218,25 @@ export default function LandingPage() {
 
 
           {/* Scam Detector Card */}
-          <div className="w-full relative animate-float group" style={{ animationDelay: '0.4s' }}>
-            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 rounded-[2rem] blur-xl transform translate-y-2 translate-x-1 -z-10 transition-all duration-500 group-hover:blur-2xl group-hover:scale-105"></div>
+          <div className="relative w-full animate-float group" style={{ animationDelay: '0.4s' }}>
+            <div className="absolute inset-0 transition-all duration-500 transform translate-x-1 translate-y-2 bg-linear-to-r from-emerald-500/20 to-cyan-500/20 rounded-4xl blur-xl -z-10 group-hover:blur-2xl group-hover:scale-105"></div>
 
             <div
-              className="h-full bg-slate-900/80 backdrop-blur-xl rounded-[2rem] p-10 border-2 border-slate-700/50 hover:border-slate-600 hover:bg-slate-800/80 transition-all duration-300 flex flex-col items-center justify-center min-h-[360px] hover:-translate-y-2 cursor-pointer"
+              className="flex flex-col items-center justify-center h-full p-10 transition-all duration-300 border-2 cursor-pointer bg-slate-900/80 backdrop-blur-xl rounded-4xl border-slate-700/50 hover:border-slate-600 hover:bg-slate-800/80 min-h-90 hover:-translate-y-2"
               onClick={() => navigate('/scam-detector')}
             >
-              <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center mb-6 shadow-inner ring-1 ring-slate-700 group-hover:scale-110 group-hover:bg-slate-700 transition-all duration-300">
+              <div className="flex items-center justify-center w-16 h-16 mb-6 transition-all duration-300 rounded-full shadow-inner bg-slate-800 ring-1 ring-slate-700 group-hover:scale-110 group-hover:bg-slate-700">
                 <ShieldCheck className="w-8 h-8 text-emerald-400 group-hover:text-emerald-300" />
               </div>
 
-              <h3 className="text-2xl font-bold mb-3 text-white">Scam Detector</h3>
-              <p className="text-slate-400 mb-8 text-center text-base max-w-xs flex-1">
+              <h3 className="mb-3 text-2xl font-bold text-white">Scam Detector</h3>
+              <p className="flex-1 max-w-xs mb-8 text-base text-center text-slate-400">
                 Analyze suspicious legal SMS/WhatsApp/email text and get a risk score + reasons.
               </p>
 
               <button
                 onClick={(e) => { e.stopPropagation(); navigate('/scam-detector'); }}
-                className="w-full sm:w-auto bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white px-8 py-3 rounded-full font-semibold transition-all shadow-[0_0_20px_rgba(16,185,129,0.25)] flex items-center justify-center gap-2 hover:scale-105"
+                className="w-full sm:w-auto bg-linear-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white px-8 py-3 rounded-full font-semibold transition-all shadow-[0_0_20px_rgba(16,185,129,0.25)] flex items-center justify-center gap-2 hover:scale-105"
               >
                 Try Scam Detector <ArrowRight className="w-5 h-5" />
               </button>
@@ -247,22 +247,22 @@ export default function LandingPage() {
 
 
       {/* FAQ + Footer */}
-      <section className="w-full max-w-7xl mx-auto px-6 pb-16 z-10">
+      <section className="z-10 w-full px-6 pb-16 mx-auto max-w-7xl">
         {/* FAQ */}
           <div
             id="faq"
-            className="mt-6 bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-[2rem] p-8 md:p-10"
+            className="p-8 mt-6 border bg-slate-900/60 backdrop-blur-xl border-slate-700/50 rounded-4xl md:p-10"
           >
           <div className="flex items-start justify-between gap-6 mb-8">
             <div>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-white">FAQ</h2>
-              <p className="text-slate-400 mt-2 max-w-2xl">
+              <h2 className="text-3xl font-extrabold text-white md:text-4xl">FAQ</h2>
+              <p className="max-w-2xl mt-2 text-slate-400">
                 Quick answers about uploads, privacy, and how NyayaVanni helps you understand legal documents.
               </p>
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             {[
               {
                 q: "What file types are supported?",
@@ -283,27 +283,27 @@ export default function LandingPage() {
             ].map((item, idx) => (
               <details
                 key={idx}
-                className="group rounded-xl border border-slate-700/50 bg-slate-950/40 p-5 hover:border-slate-600 transition"
+                className="p-5 transition border group rounded-xl border-slate-700/50 bg-slate-950/40 hover:border-slate-600"
               >
-                <summary className="cursor-pointer list-none flex items-center justify-between gap-4">
+                <summary className="flex items-center justify-between gap-4 list-none cursor-pointer">
                   <span className="font-semibold text-white">{item.q}</span>
-                  <span className="shrink-0 w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-open:bg-white/10 transition">
-                    <span className="text-slate-300 group-open:rotate-45 transition-transform">+</span>
+                  <span className="flex items-center justify-center w-8 h-8 transition border rounded-full shrink-0 bg-white/5 border-white/10 group-open:bg-white/10">
+                    <span className="transition-transform text-slate-300 group-open:rotate-45">+</span>
                   </span>
                 </summary>
-                <p className="mt-3 text-slate-400 leading-relaxed">{item.a}</p>
+                <p className="mt-3 leading-relaxed text-slate-400">{item.a}</p>
               </details>
             ))}
           </div>
         </div>
 
         {/* Footer */}
-        <footer className="mt-10 rounded-[2rem] border border-slate-700/50 bg-slate-900/60 backdrop-blur-xl p-8 md:p-10">
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
+        <footer className="p-8 mt-10 border rounded-4xl border-slate-700/50 bg-slate-900/60 backdrop-blur-xl md:p-10">
+          <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
             {/* Brand */}
             <div className="max-w-md">
               <div className="flex items-center gap-2 text-xl font-bold text-white">
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-nyaya-500/15 border border-nyaya-500/25">
+                <span className="inline-flex items-center justify-center w-10 h-10 border rounded-full bg-nyaya-500/15 border-nyaya-500/25">
                   <Scale className="w-5 h-5 text-nyaya-400" />
                 </span>
                 <span>Nyaya<span className="text-nyaya-400">Vanni</span></span>
@@ -314,45 +314,45 @@ export default function LandingPage() {
             </div>
 
             {/* Links */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 w-full md:w-auto">
+            <div className="grid w-full grid-cols-2 gap-6 sm:grid-cols-3 md:w-auto">
               <div>
-                <p className="text-sm font-semibold text-white mb-3">Product</p>
+                <p className="mb-3 text-sm font-semibold text-white">Product</p>
                 <div className="flex flex-col gap-2 text-slate-400">
-                  <button onClick={() => navigate('/chat')} className="text-left hover:text-white transition">Chat with AI</button>
-                  <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-left hover:text-white transition">Upload Document</button>
-                  <button onClick={() => navigate('/lawyers')} className="text-left hover:text-white transition">Hire a Lawyer</button>
+                  <button onClick={() => navigate('/chat')} className="text-left transition hover:text-white">Chat with AI</button>
+                  <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-left transition hover:text-white">Upload Document</button>
+                  <button onClick={() => navigate('/lawyers')} className="text-left transition hover:text-white">Hire a Lawyer</button>
                 </div>
               </div>
 
               <div>
-                <p className="text-sm font-semibold text-white mb-3">Resources</p>
+                <p className="mb-3 text-sm font-semibold text-white">Resources</p>
                 <div className="flex flex-col gap-2 text-slate-400">
                 <button
                   onClick={() => navigate('/faq')}
-                  className="text-left hover:text-white transition"
+                  className="text-left transition hover:text-white"
                 >
                   FAQ
                 </button>
-                  <button onClick={() => navigate('/privacy-policy')} className="text-left hover:text-white transition">Privacy Policy</button>
-                  <button onClick={() => navigate('/terms')} className="text-left hover:text-white transition">Terms of Service</button>
+                  <button onClick={() => navigate('/privacy-policy')} className="text-left transition hover:text-white">Privacy Policy</button>
+                  <button onClick={() => navigate('/terms')} className="text-left transition hover:text-white">Terms of Service</button>
                 </div>
               </div>
 
               <div>
-                <p className="text-sm font-semibold text-white mb-3">Contact</p>
+                <p className="mb-3 text-sm font-semibold text-white">Contact</p>
                 <div className="flex flex-col gap-2 text-slate-400">
-                  <a href="mailto:support@nyayavanni.com" className="hover:text-white transition">support@nyayavanni.com</a>
-                  <span className="text-slate-500 text-sm">Mon–Fri, 10AM–6PM</span>
+                  <a href="mailto:support@nyayavanni.com" className="transition hover:text-white">support@nyayavanni.com</a>
+                  <span className="text-sm text-slate-500">Mon–Fri, 10AM–6PM</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-8 pt-6 border-t border-slate-700/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <p className="text-slate-500 text-sm">
+          <div className="flex flex-col items-start justify-between gap-4 pt-6 mt-8 border-t border-slate-700/50 sm:flex-row sm:items-center">
+            <p className="text-sm text-slate-500">
               © {new Date().getFullYear()} NyayaVanni. All rights reserved.
             </p>
-            <p className="text-slate-500 text-sm">
+            <p className="text-sm text-slate-500">
               Not legal advice. For professional help, consult a lawyer.
             </p>
           </div>
