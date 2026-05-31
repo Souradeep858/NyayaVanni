@@ -417,7 +417,6 @@ const graphEdges = knowledgeGraph?.edges?.filter((edge) => {
             )}
             
           </div>
-        </div>
         {knowledgeGraph && (
           <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 transition-colors duration-300">
             
@@ -541,6 +540,7 @@ const graphEdges = knowledgeGraph?.edges?.filter((edge) => {
             </div>
           </div>
         )}
+        </div>
 
         {/* Right Column: AI Chat */}
         <div className="lg:col-span-5 h-[calc(100vh-8rem)] sticky top-24 flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800 overflow-hidden transition-colors duration-300">
