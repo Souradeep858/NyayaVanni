@@ -14,6 +14,7 @@ import ContactUs from "./pages/ContactUs";
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { Globe } from 'lucide-react';
+import NotFound from "./pages/NotFound";
 
 const LanguageToggle = () => {
   const { language, toggleLanguage } = useLanguage();
@@ -48,6 +49,7 @@ function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/version-diff" element={<VersionDiff />} />
+           <Route path="/*" element={<Notfound/>}/>
           </Routes>
           
           {/* Pinned Controls Layout */}
