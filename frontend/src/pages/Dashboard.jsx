@@ -14,6 +14,7 @@ import { ensureSessionId } from '../utils/session';
 import ThemeToggle from '../components/ThemeToggle';
 import Breadcrumb from '../components/Breadcrumb';
 import { useDocumentHistory } from '../hooks/useDocumentHistory';
+import { DOCUMENT_TYPES, PLACEHOLDERS, TITLES, HEADERS } from '../constants';
 
 const LOADING_CONTAINER = `min-h-screen bg-slate-50 dark:bg-slate-950 
   flex flex-col items-center justify-center transition-colors duration-300`;
@@ -267,8 +268,8 @@ const [selectedType, _setSelectedType] = useState('all');
         
         saveToHistory({
           documentId,
-          fileName: file?.name || 'Unknown Document',
-          fileType: file?.type?.includes('pdf') ? 'PDF' : file?.type?.includes('image') ? 'Image' : 'Document',
+          fileName: file?.name || DOCUMENT_TYPES.UNKNOWN,
+          fileType: file?.type?.includes('pdf') ? DOCUMENT_TYPES.PDF : file?.type?.includes('image') ? DOCUMENT_TYPES.IMAGE : DOCUMENT_TYPES.DOCUMENT,
           riskLevel: data.analysis?.risk_level || data.classification?.risk_level || 'unknown',
           analyzedAt: new Date().toISOString(),
         });
@@ -309,7 +310,7 @@ const [selectedType, _setSelectedType] = useState('all');
       const sessionId = await ensureSessionId(apiUrl);
       const response = await fetch(`${apiUrl}/api/chat/${documentId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Session-Id': sessionId },
+        headers: { ...HEADERS.CONTENT_TYPE_JSON, 'X-Session-Id': sessionId },
         credentials: 'include',
         body: JSON.stringify({
           user_message: userMsg.message,
@@ -506,13 +507,13 @@ const graphEdges = knowledgeGraph?.edges?.filter((edge) => {
             file?.type?.includes('pdf') ? (
             <iframe
             src={previewUrl}
-            title="Document Preview"
+            title={TITLES.DOCUMENT_PREVIEW}
             className="w-full h-full"
             />
           ) : (
             <img
           src={previewUrl}
-          alt="Uploaded Document"
+          alt={DOCUMENT_TYPES.UNKNOWN}
           className="w-full h-full object-contain bg-white"
           />
       )
@@ -823,7 +824,7 @@ const graphEdges = knowledgeGraph?.edges?.filter((edge) => {
   <div className="mt-4">
     <input
       type="text"
-      placeholder="Search nodes..."
+      placeholder={PLACEHOLDERS.SEARCH_NODES}
       className={SEARCH_INPUT}
     />
   </div>

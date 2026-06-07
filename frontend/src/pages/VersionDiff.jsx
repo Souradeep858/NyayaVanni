@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useLanguage } from '../contexts/LanguageContext';
 import ThemeToggle from '../components/ThemeToggle';
 import Footer from '../components/Footer';
+import { VERSION_DIFF, MESSAGES, HEADERS } from '../constants';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
@@ -35,9 +36,8 @@ function DropZone({ label, file, onFile, onClear, gradientFrom, gradientTo }) {
   }, [onFile]);
 
   return (
-    <div className="relative w-full animate-float group flex-1 min-w-0" style={{ animationDelay: label === 'Old Document' ? '0s' : '0.2s' }}>
+    <div className="relative w-full animate-float group flex-1 min-w-0" style={{ animationDelay: label === VERSION_DIFF.OLD_DOCUMENT ? '0s' : '0.2s' }}>
       <div className={`absolute inset-0 transition-all duration-500 transform translate-x-1 translate-y-2 bg-linear-to-r ${gradientFrom} ${gradientTo} rounded-4xl blur-xl -z-10 group-hover:blur-2xl group-hover:scale-105`}></div>
-
       <div
         className={`h-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-4xl p-8 border-2 transition-all duration-300 flex flex-col items-center justify-center min-h-72 ${
           dragging
@@ -57,9 +57,7 @@ function DropZone({ label, file, onFile, onClear, gradientFrom, gradientTo }) {
           accept="application/pdf,image/png,image/jpeg"
           onChange={(e) => { if (e.target.files?.[0]) onFile(e.target.files[0]); }}
         />
-
         <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-5">{label}</p>
-
         {file ? (
           <div className="flex flex-col items-center gap-3 w-full">
             <div className="flex items-center justify-center w-14 h-14 rounded-full bg-nyaya-500/15 dark:bg-nyaya-500/20 ring-1 ring-nyaya-500/30 dark:ring-nyaya-500/50">
@@ -96,7 +94,7 @@ function DropZone({ label, file, onFile, onClear, gradientFrom, gradientTo }) {
   );
 }
 
-function ResultSection({ icon: Icon, title, iconClass, borderClass, bgClass, items, renderItem }) {
+function ResultSection({ icon: Icon, title, iconClass, items, renderItem }) {
   if (!items || items.length === 0) return null;
   return (
     <div className="mb-6">
@@ -125,7 +123,6 @@ function DiffResults({ data }) {
 
   return (
     <div className="space-y-6">
-      {/* Stats row */}
       <div className="grid grid-cols-3 gap-4">
         <div className="rounded-3xl border border-slate-200 dark:border-slate-700/50 bg-white/80 dark:bg-slate-900/80 p-4 text-center">
           <div className="flex items-center justify-center gap-1 text-emerald-600 dark:text-emerald-400 mb-1">
@@ -154,9 +151,8 @@ function DiffResults({ data }) {
       )}
 
       <div className="rounded-3xl border border-slate-200 dark:border-slate-700/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl p-6 space-y-1">
-
         <ResultSection
-          icon={TrendingUp} title="Added Obligations" iconClass="text-amber-500"
+          icon={TrendingUp} title={VERSION_DIFF.ADDED_OBLIGATIONS} iconClass="text-amber-500"
           items={analysis.added_obligations}
           renderItem={(item, i) => (
             <div key={i} className="rounded-2xl border border-amber-100 dark:border-amber-900/40 bg-amber-50/60 dark:bg-amber-900/10 p-4">
@@ -168,9 +164,8 @@ function DiffResults({ data }) {
             </div>
           )}
         />
-
         <ResultSection
-          icon={ShieldAlert} title="Increased Penalties" iconClass="text-rose-500"
+          icon={ShieldAlert} title={VERSION_DIFF.INCREASED_PENALTIES} iconClass="text-rose-500"
           items={analysis.increased_penalties}
           renderItem={(item, i) => (
             <div key={i} className="rounded-2xl border border-rose-100 dark:border-rose-900/40 bg-rose-50/60 dark:bg-rose-900/10 p-4">
@@ -184,9 +179,8 @@ function DiffResults({ data }) {
             </div>
           )}
         />
-
         <ResultSection
-          icon={UserMinus} title="Reduced Employee Rights" iconClass="text-purple-500"
+          icon={UserMinus} title={VERSION_DIFF.REDUCED_EMPLOYEE_RIGHTS} iconClass="text-purple-500"
           items={analysis.reduced_employee_rights}
           renderItem={(item, i) => (
             <div key={i} className="rounded-2xl border border-purple-100 dark:border-purple-900/40 bg-purple-50/60 dark:bg-purple-900/10 p-4">
@@ -198,9 +192,8 @@ function DiffResults({ data }) {
             </div>
           )}
         />
-
         <ResultSection
-          icon={Eye} title="Hidden / Subtle Modifications" iconClass="text-slate-500"
+          icon={Eye} title={VERSION_DIFF.HIDDEN_MODIFICATIONS} iconClass="text-slate-500"
           items={analysis.hidden_modifications}
           renderItem={(item, i) => (
             <div key={i} className="rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50/60 dark:bg-slate-800/40 p-4">
@@ -212,9 +205,8 @@ function DiffResults({ data }) {
             </div>
           )}
         />
-
         <ResultSection
-          icon={AlertCircle} title="New Legal Exposure" iconClass="text-red-500"
+          icon={AlertCircle} title={VERSION_DIFF.NEW_LEGAL_EXPOSURE} iconClass="text-red-500"
           items={analysis.new_legal_exposure}
           renderItem={(item, i) => (
             <div key={i} className="rounded-2xl border border-red-100 dark:border-red-900/40 bg-red-50/60 dark:bg-red-900/10 p-4">
@@ -245,7 +237,6 @@ function DiffResults({ data }) {
         </div>
       )}
 
-      {/* Disclaimer */}
       <div className="flex items-start gap-2 rounded-2xl border border-slate-200 dark:border-slate-700/50 bg-slate-50/60 dark:bg-slate-800/40 p-4">
         <Scale className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" />
         <p className="text-xs text-slate-400 dark:text-slate-500 leading-relaxed">
@@ -279,12 +270,12 @@ export default function VersionDiff() {
 
     try {
       const { data } = await axios.post(`${API_BASE}/api/diff-analysis`, form, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+        headers: HEADERS.CONTENT_TYPE_MULTIPART,
         timeout: 120000,
       });
       setResult(data);
     } catch (err) {
-      const msg = err.response?.data?.detail || err.message || 'Something went wrong. Please try again.';
+      const msg = err.response?.data?.detail || err.message || MESSAGES.SOMETHING_WENT_WRONG;
       setError(msg);
     } finally {
       setLoading(false);
@@ -332,37 +323,29 @@ export default function VersionDiff() {
       </nav>
 
       <main className="max-w-4xl mx-auto px-4 py-10 space-y-8">
-
         <div className="flex flex-col sm:flex-row gap-6 items-stretch">
           <DropZone
-            label="Old Document"
-            file={oldFile}
-            onFile={setOldFile}
-            onClear={() => setOldFile(null)}
+            label={VERSION_DIFF.OLD_DOCUMENT}
+            file={oldFile} onFile={setOldFile} onClear={() => setOldFile(null)}
             gradientFrom="from-blue-500/10 dark:from-blue-500/20"
             gradientTo="to-nyaya-500/10 dark:to-nyaya-500/20"
           />
-
           <div className="flex items-center justify-center flex-shrink-0">
             <div className="hidden sm:flex w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 items-center justify-center border border-slate-200 dark:border-slate-700">
               <ArrowRight className="w-4 h-4 text-slate-400" />
             </div>
             <div className="sm:hidden w-full h-px bg-slate-200 dark:bg-slate-800" />
           </div>
-
           <DropZone
-            label="New Document"
-            file={newFile}
-            onFile={setNewFile}
-            onClear={() => setNewFile(null)}
+            label={VERSION_DIFF.NEW_DOCUMENT}
+            file={newFile} onFile={setNewFile} onClear={() => setNewFile(null)}
             gradientFrom="from-violet-500/10 dark:from-violet-500/20"
             gradientTo="to-purple-500/10 dark:to-purple-500/20"
           />
         </div>
 
         <button
-          onClick={handleAnalyse}
-          disabled={!canAnalyse}
+          onClick={handleAnalyse} disabled={!canAnalyse}
           className={`w-full py-4 rounded-full font-semibold flex items-center justify-center gap-2 transition-all duration-200 shadow-lg text-base ${
             canAnalyse
               ? 'bg-linear-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 text-white hover:scale-[1.02] shadow-blue-500/20 dark:shadow-blue-500/30'
@@ -379,11 +362,7 @@ export default function VersionDiff() {
         {loading && (
           <div className="rounded-4xl border border-slate-200 dark:border-slate-700/50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl p-8 space-y-4">
             {[75, 55, 85, 45, 65].map((w, i) => (
-              <div
-                key={i}
-                className="h-3 bg-slate-100 dark:bg-slate-800 rounded-full animate-pulse"
-                style={{ width: `${w}%`, animationDelay: `${i * 120}ms` }}
-              />
+              <div key={i} className="h-3 bg-slate-100 dark:bg-slate-800 rounded-full animate-pulse" style={{ width: `${w}%`, animationDelay: `${i * 120}ms` }} />
             ))}
             <p className="text-xs text-slate-400 dark:text-slate-500 text-center pt-2">
               Extracting text and running AI analysis — this may take 15–30 seconds.
@@ -408,10 +387,7 @@ export default function VersionDiff() {
           <div>
             <div className="flex items-center justify-between mb-4 px-1">
               <h2 className="font-bold text-slate-900 dark:text-white text-lg">Analysis Results</h2>
-              <button
-                onClick={handleReset}
-                className="text-sm text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 underline underline-offset-2 transition-colors"
-              >
+              <button onClick={handleReset} className="text-sm text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 underline underline-offset-2 transition-colors">
                 Start over
               </button>
             </div>
@@ -419,7 +395,6 @@ export default function VersionDiff() {
           </div>
         )}
       </main>
-
       <Footer />
     </div>
   );

@@ -247,7 +247,7 @@ export default function HireLawyer() {
             <button
               onClick={() => navigate(-1)}
               className="p-2 transition border rounded-full bg-white dark:bg-white/5 border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-700 dark:text-slate-200 cursor-pointer"
-              aria-label="Go back"
+              aria-label={ARIA_LABELS.GO_BACK}
             >
               <ArrowLeft className="w-5 h-5" />
             </button>
@@ -653,7 +653,7 @@ export default function HireLawyer() {
                       Case Summary or Questions
                     </label>
                     <textarea
-                      placeholder="Briefly describe your case or outline the questions you want to ask..."
+                      placeholder={PLACEHOLDERS.HIRE_LAWYER_CASE}
                       value={caseDescription}
                       onChange={(e) => setCaseDescription(e.target.value)}
                       rows={3}
