@@ -98,6 +98,7 @@ async def create_session(request: Request, response: Response):
 
 
 @api_router.post("/upload")
+@limiter.limit(UPLOAD_RATE_LIMIT)
 async def upload_document(request: Request, file: UploadFile = File(...)):
     """Upload document and return documentId"""
     try:
@@ -262,8 +263,17 @@ def chat_with_document(request: Request, document_id: str, chat_request: ChatReq
         cached = get_cached_analysis(document_id, chat_request.language)
         analysis = cached["analysis"] if cached else {}
 
-        history = [{"role": msg.role, "message": msg.message} for msg in chat_request.chat_history]
-        generator = stream_chat_response(analysis, history, chat_request.user_message, chat_request.language)
+        history = [
+            {"role": msg.role, "message": msg.message}
+            for msg in chat_request.chat_history
+        ]
+
+        generator = stream_chat_response(
+            analysis,
+            history,
+            chat_request.user_message,
+            chat_request.language
+        )
 
         return StreamingResponse(generator, media_type="text/plain")
 
@@ -271,13 +281,15 @@ def chat_with_document(request: Request, document_id: str, chat_request: ChatReq
         raise
     except HTTPException as http_err:
         raise http_err
+
     except Exception as e:
         logger.error(f"Chat failed for document {document_id}: {e}")
         raise HTTPException(status_code=500, detail="Chat generation failed")
 
 
 @api_router.post("/generate-document")
-def generate_document(request: DocumentGenerationRequest):
+@limiter.limit("10/minute")
+def generate_document(request: Request, payload: DocumentGenerationRequest):
     """Generates a standard NDA document as a PDF based on provided details."""
     try:
         buffer = io.BytesIO()
@@ -291,14 +303,14 @@ def generate_document(request: DocumentGenerationRequest):
         text = c.beginText(50, height - 100)
 
         template_text = (
-            f"This Non-Disclosure Agreement (the \"Agreement\") is entered into on {request.effective_date} "
-            f"by and between {request.party_one_name} (\"Disclosing Party\") and {request.party_two_name} "
+            f"This Non-Disclosure Agreement (the \"Agreement\") is entered into on {payload.effective_date} "
+            f"by and between {payload.party_one_name} (\"Disclosing Party\") and {payload.party_two_name} "
             f"(\"Receiving Party\").\n\n"
             f"1. Confidential Information: The Receiving Party agrees to keep confidential any proprietary "
             f"information disclosed by the Disclosing Party.\n\n"
             f"2. Consideration: In consideration for the obligations set forth herein, the parties acknowledge "
-            f"the receipt and sufficiency of {request.consideration_amount}.\n\n"
-            f"3. Jurisdiction: This Agreement shall be governed by the laws of {request.jurisdiction}.\n\n"
+            f"the receipt and sufficiency of {payload.consideration_amount}.\n\n"
+            f"3. Jurisdiction: This Agreement shall be governed by the laws of {payload.jurisdiction}.\n\n"
             f"IN WITNESS WHEREOF, the parties have executed this Agreement as of the date first above written."
         )
 
