@@ -115,12 +115,22 @@ export default function ScamDetector() {
   const [text, setText] = useState("");
   const [lastAnalyzed, setLastAnalyzed] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [analyzing, setAnalyzing] = useState(false);
 
   const analysis = useMemo(() => { if (!lastAnalyzed) return null; return scoreText(lastAnalyzed); }, [lastAnalyzed]);
   const risk = useMemo(() => { if (!analysis) return null; return getRiskLabel(analysis.score); }, [analysis]);
 
-  const onAnalyze = () => { const trimmed = text.trim(); if (!trimmed) return; setLastAnalyzed(trimmed); };
-  const onReset = () => { setText(""); setLastAnalyzed(null); setCopied(false); };
+  const onAnalyze = () => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    setAnalyzing(true);
+    setTimeout(() => {
+      setLastAnalyzed(trimmed);
+      setAnalyzing(false);
+    }, 1800);
+  };
+
+  const onReset = () => { setText(""); setLastAnalyzed(null); setCopied(false); setAnalyzing(false); };
   const onCopy = async () => {
     try { await navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 1200); }
     catch { /* ignore */ }
@@ -196,20 +206,29 @@ export default function ScamDetector() {
               <p className="text-xs text-slate-500 dark:text-slate-400">
                 Tip: include links/phone numbers if present (helps detection).
               </p>
-              <button onClick={onAnalyze} disabled={!text.trim()} className={ANALYZE_BUTTON}>
-                Analyze Message
+              <button onClick={onAnalyze} disabled={!text.trim() || analyzing} className={ANALYZE_BUTTON}>
+                {analyzing ? "Analyzing..." : "Analyze Message"}
               </button>
             </div>
           </div>
 
           <div className={`lg:col-span-2 ${CARD_BASE}`}>
-            {!analysis ? (
+            {!analysis && !analyzing ? (
               <div className={EMPTY_STATE}>
                 <ShieldCheck className="w-12 h-12 text-slate-500 dark:text-slate-400 mx-auto mb-4" />
                 <h3 className="text-xl font-bold text-slate-850 dark:text-white">No analysis yet</h3>
                 <p className="text-slate-600 dark:text-slate-400 mt-2 text-sm">
                   Paste text and click <span className="text-slate-800 dark:text-slate-200 font-semibold">Analyze</span>.
                 </p>
+              </div>
+            ) : analyzing ? (
+              <div className="flex flex-col items-center justify-center py-12">
+                <div className="flex gap-1.5 items-center mb-4">
+                  <div className="w-3 h-3 rounded-full bg-nyaya-500 animate-bounce" style={{ animationDelay: '0s' }}></div>
+                  <div className="w-3 h-3 rounded-full bg-nyaya-500 animate-bounce" style={{ animationDelay: '0.15s' }}></div>
+                  <div className="w-3 h-3 rounded-full bg-nyaya-500 animate-bounce" style={{ animationDelay: '0.3s' }}></div>
+                </div>
+                <p className="text-sm text-slate-500 dark:text-slate-400">Analyzing message for scam patterns...</p>
               </div>
             ) : (
               <div>
