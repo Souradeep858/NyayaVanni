@@ -1,4 +1,4 @@
-﻿import os
+import os
 import uuid
 import logging
 import io
@@ -105,6 +105,7 @@ async def contact_us(request: Request, body: ContactRequest):
 
 
 @api_router.get("/session")
+@limiter.limit("10/minute")
 async def create_session(request: Request, response: Response):
     session_id = request.cookies.get("session_id")
     if not session_id:
